@@ -9,7 +9,9 @@
 (********************************************************)
 unit JsonTools;
 
-{$mode delphi}
+{$IFDEF FPC}
+  {$mode delphi}
+{$ENDIF}
 
 interface
 
@@ -889,7 +891,8 @@ begin
     Error(SNodeNotCollection);
 end;
 
-function TJsonNode.Add(const Name: string; K: TJsonNodeKind = nkObject): TJsonNode; overload;
+function TJsonNode.Add(const Name: string; K: TJsonNodeKind = nkObject): TJsonNode; 
+{$IFDEF FPC} overload; {$ENDIF}
 begin
   case K of
     nkObject, nkArray: Result := Add(K, Name, '');
@@ -900,19 +903,22 @@ begin
   end;
 end;
 
-function TJsonNode.Add(const Name: string; B: Boolean): TJsonNode; overload;
+function TJsonNode.Add(const Name: string; B: Boolean): TJsonNode; 
+{$IFDEF FPC} overload; {$ENDIF}
 const
   Bools: array[Boolean] of string = ('false', 'true');
 begin
   Result := Add(nkBool, Name, Bools[B]);
 end;
 
-function TJsonNode.Add(const Name: string; const N: Double): TJsonNode; overload;
+function TJsonNode.Add(const Name: string; const N: Double): TJsonNode; 
+{$IFDEF FPC} overload; {$ENDIF}
 begin
   Result := Add(nkNumber, Name, FloatToStr(N));
 end;
 
-function TJsonNode.Add(const Name: string; const S: string): TJsonNode; overload;
+function TJsonNode.Add(const Name: string; const S: string): TJsonNode; 
+{$IFDEF FPC} overload; {$ENDIF}
 begin
   Result := Add(nkString, Name, JsonStringEncode(S));
 end;
